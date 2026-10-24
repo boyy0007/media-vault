@@ -3,6 +3,11 @@
 Your own private photo, GIF and video library (plus files, albums, a locked folder and hosted web pages), running on
 your Windows PC. Phones and laptops use it in the browser or with the Android app.
 
+<p>
+  <img src="docs/images/status-window.png" alt="The Media Vault window: servers running, its addresses and the library" width="49%">
+  <img src="docs/images/setup-1-welcome.png" alt="Setup's first page" width="49%">
+</p>
+
 ## What your PC needs
 
 Windows 10 or 11 (64-bit) and this folder - that's all. **No Node.js, npm, Python, Docker, Git or Linux terminal
@@ -48,6 +53,11 @@ whether it's running and the addresses to use.
 - **From your own Media Vault:** it comes with Media Vault (`pb_public\downloads\media-vault.apk`), so your PC hands
   it out too: **Connect a phone...** in the status window (or setup's last page) has an **Android app - download** QR code, or
   open `{your Media Vault address}/downloads/media-vault.apk` in the phone's browser.
+
+<p>
+  <img src="docs/images/status-phones.png" alt="The Phones card on the status page, with the Connect a phone button" width="58%">
+  <img src="docs/images/connect-phone.png" alt="The Connect a phone window: a QR code and the address it opens" width="30%">
+</p>
 
 **Installing it** (Android 8 or newer):
 
