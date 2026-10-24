@@ -38,8 +38,34 @@ whether it's running and the addresses to use.
 - **Anywhere:** install [Tailscale](https://tailscale.com/download) on the PC and the phone, sign in to both with the
   same account, and run setup again (`setup.bat`) - it adds a private `https://` address that only your devices can
   open.
-- **Android app:** not included in this copy - see `android\README.md` to build it. Once it's in
-  `pb_public\downloads\`, setup's last page shows the download link and the address to type in.
+- **Android app:** see below.
+
+## Android app
+
+**Where to get it** (it's the same app everywhere - `media-vault.apk`):
+
+- **From GitHub:** the [latest release](../../releases/latest) - under **Assets**, tap **media-vault.apk**.
+- **From your own Media Vault:** it comes with Media Vault (`pb_public\downloads\media-vault.apk`), so your PC hands
+  it out too: **Connect a phone...** in the status window (or setup's last page) has an **Android app - download** QR code, or
+  open `{your Media Vault address}/downloads/media-vault.apk` in the phone's browser.
+
+**Installing it** (Android 8 or newer):
+
+1. Download `media-vault.apk` on the phone and tap it (or open it from **Downloads**).
+2. If Android says it can't install apps from this source, tap **Settings**, turn on **Allow from this source** for
+   your browser, then go back and tap **Install**. If Play Protect warns about an unknown app, tap **More details** >
+   **Install anyway** - the app isn't on the Play Store, so it doesn't know it.
+3. Open **Media Vault**. It asks for your server address - the one shown in the status window or on setup's last
+   page: `https://{pc}.{tailnet}.ts.net:8443` over Tailscale (works anywhere) or `http://{PC's Wi-Fi address}:8091`
+   (at home only). Then sign in with your Media Vault email and password.
+4. Allow access to photos and videos when it asks, so you can upload, and photo locations, so your photos keep where
+   they were taken.
+
+**Updating:** install the new `media-vault.apk` over the old one - your sign-in stays. If Android says the app
+"conflicts with an existing package" (installs from before October 2026 used another signing key), uninstall
+Media Vault from the phone first, then install. Your photos are on the PC, so nothing is lost.
+
+Building it yourself: `android\README.md`.
 
 ## Client galleries (for photographers)
 

@@ -20,5 +20,6 @@ Release signing needs your own key: `media-vault.jks` + `keystore.properties` (`
 and back both up: updates only install over the existing app if they're signed with the same key. Bump
 `versionCode` in `app/build.gradle` for each update.
 
-This copy doesn't include a built app: build it as above (with your own key) and copy it to
-`pb_public\downloads\media-vault.apk`; setup's last page then shows the download link.
+A built app comes with Media Vault (`pb_public\downloads\media-vault.apk`) and is attached to each GitHub release;
+installing and using it: "Android app" in the main `README.md`. After building a new one, copy it there (as above) so
+the status window's "Connect a phone" and setup's last page hand out the new version, and attach it to a new release.
