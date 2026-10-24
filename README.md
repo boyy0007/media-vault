@@ -107,6 +107,11 @@ account or Tailscale. You see views, downloads and their favorites. Step by step
 **Sites** in the sidebar (owner only) puts your own web projects online from the same PC - anything that's a folder
 of files with an `index.html`: a portfolio, a small web game, a page for an event, a built React/Vue/Svelte app.
 
+<p>
+  <img src="docs/images/app-sites.jpg" alt="The Sites page: three sites with their address, access, visits and buttons" width="49%">
+  <img src="docs/images/site-store-page.jpg" alt="A site's store page: cover, Play and Download, screenshots, description and downloads" width="49%">
+</p>
+
 - **Publish:** **New site**, give it a name and an address (e.g. `my-game`), then **Upload folder** or
   **Upload .zip** - or just drop the folder or .zip on the page. A wrapping folder, hidden files and `node_modules`
   are skipped, and if the project has a built `dist\` or `build\` folder Media Vault offers to publish that. Uploading
@@ -124,6 +129,12 @@ of files with an `index.html`: a portfolio, a small web game, a page for an even
   need a key. Each key works on 1 device (or 3, or any number), can expire after 7 or 30 days, and stops working when
   you delete it.
 - **Visits:** each site card shows its views, plays and downloads; click that line for this week and today.
+
+<p>
+  <img src="docs/images/site-page-editor.jpg" alt="Editing a store page: tagline, about, cover, screenshots and downloads" width="32%">
+  <img src="docs/images/site-keys.jpg" alt="Keys: personal links with how many devices and when they expire" width="32%">
+  <img src="docs/images/site-visits.jpg" alt="Visits: page views, plays and downloads today, this week and all time" width="32%">
+</p>
 - **Sites with a backend** (e.g. a game that saves players' progress on a server): **Settings** > **Add a site or
   backend...** in the Media Vault window sets up the site and its own PocketBase server in one go.
 

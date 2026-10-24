@@ -306,6 +306,8 @@ access setting: public, password, or private.
 4. Press **Open** to see it. To update it later, upload again - that replaces the whole site. **Rename** changes its
    name and address; **Delete** takes it offline.
 
+![The Sites page: each site's address, who can open it, its visits and its buttons](images/app-sites.jpg)
+
 **Who can open it - Access:** on the site's card press **Access** and pick one:
 - **Public** - anyone with the link. Over Tailscale that means only your own devices, *unless* Funnel is on for the
   sites (Media Vault window > **Settings** > **Hosted sites**: **Public - anyone with the link**), which puts them on
@@ -320,14 +322,27 @@ Turn on **Show a page before the site** and press **Save**. Visitors then press 
 screen; opening it from the app still goes straight to the site. Tick **Downloads need a key** to keep the downloads
 for people you give a key to.
 
+![Editing a store page](images/site-page-editor.jpg)
+
+What visitors see (on a computer and on a phone):
+
+<p>
+  <img src="images/site-store-page.jpg" alt="A store page on a computer" width="72%">
+  <img src="images/site-store-page-phone.jpg" alt="The same store page on a phone" width="24%">
+</p>
+
 **Keys:** a key is a personal link (`.../my-game/?key=...`) for one person. It gets them past **Password** or
 **Only me**, and to downloads that need a key. Press **Keys**, write who it's for (only you see that), choose how many
 devices may use it (1, 3 or any number) and whether it expires (never, 7 or 30 days), press **Make key** and send them
 its link. Deleting a key shuts it off straight away; changing the site's password doesn't.
 
+![Keys for a password-protected site](images/site-keys.jpg)
+
 **Visits:** once people open a site, its card shows how many views (store page), plays (the site itself) and downloads
 it has had - each visitor counts once per 30 minutes, and playing it inside the app isn't counted. Click that line
 for all time, this week and today.
+
+![Visits for a site](images/site-visits.jpg)
 
 **Sharing a site:** each site has **Copy link** and **QR code**. The QR code opens a window with the code, the
 link and who can open it; point a phone's camera at it, or press **Save picture** (a PNG with the site's name and
