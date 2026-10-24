@@ -4,9 +4,27 @@ Your own private photo, GIF and video library (plus files, albums, a locked fold
 your Windows PC. Phones and laptops use it in the browser or with the Android app.
 
 <p>
-  <img src="docs/images/status-window.png" alt="The Media Vault window: servers running, its addresses and the library" width="49%">
+  <img src="docs/images/app-library.jpg" alt="The Media Vault library in the browser: a grid of photos with the sidebar" width="72%">
+  <img src="docs/images/app-phone-library.jpg" alt="The same library on a phone" width="24%">
+</p>
+
+## Screenshots
+
+<p>
+  <img src="docs/images/app-viewer.jpg" alt="Viewing a photo, with zoom, favorite, download, info and delete" width="49%">
+  <img src="docs/images/app-map.jpg" alt="The map: photos placed where they were taken" width="49%">
+</p>
+<p>
+  <img src="docs/images/app-albums.jpg" alt="Albums" width="49%">
+  <img src="docs/images/status-window.png" alt="The Media Vault window on the PC: servers running, its addresses and the library" width="49%">
+</p>
+<p>
+  <img src="docs/images/app-phone-viewer.jpg" alt="Viewing a photo on a phone" width="24%">
+  <img src="docs/images/app-phone-menu.jpg" alt="The phone menu" width="24%">
   <img src="docs/images/setup-1-welcome.png" alt="Setup's first page" width="49%">
 </p>
+
+*Sample photos from [Unsplash](https://unsplash.com) via [Lorem Picsum](https://picsum.photos).*
 
 ## What your PC needs
 
