@@ -1,0 +1,40 @@
+# PocketBase itself - setup downloads the pinned version (mv-common.ps1)
+pocketbase.exe
+# Everything an install creates when it runs - never commit it.
+# The library: photos, videos, accounts, admin login, locked folder, status token
+pb_data/
+# The sites server's database, hosted sites, upload staging and site passwords
+pb_sites/pb_data/
+pb_sites/www/
+pb_sites/staging/
+pb_sites/access.json
+# The key Media Vault and the sites server share for galleries' activity (pb_hooks/gallery_lib.js)
+pb_sites/.sync-key
+# Public share links (hard links of library files)
+pb_sites/shares/
+# Site backends set up on this PC (their data especially)
+backends/*/pb_data/
+# This PC's settings, logs, generated icon
+mediavault.json
+mediavault.ico
+logs/
+# Backups and packages (packages: zips kept here)
+*BACKUP*.zip
+Media-Vault-setup-*.zip
+packages/
+# Your own projects (sites with a backend) - kept here optionally, each its own thing
+projects/*
+!projects/README.txt
+# Android: signing key + passwords, SDK path, builds (also in android/.gitignore)
+*.jks
+*.keystore
+keystore.properties
+local.properties
+android/build/
+android/app/build/
+android/.gradle/
+# Editors / OS
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini

@@ -1,0 +1,47 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.mediavault.app'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId 'com.mediavault.app'
+        minSdk 26
+        targetSdk 36
+        versionCode 8
+        versionName '1.7'
+    }
+
+    // Release signing: keystore.properties next to settings.gradle (see README.md). Without it the
+    // release build is unsigned; the debug build (gradlew assembleDebug) always installs.
+    def ksFile = rootProject.file('keystore.properties')
+    if (ksFile.exists()) {
+        def ks = new Properties()
+        ks.load(new FileInputStream(ksFile))
+        signingConfigs {
+            release {
+                storeFile rootProject.file(ks['storeFile'])
+                storePassword ks['storePassword']
+                keyAlias ks['keyAlias']
+                keyPassword ks['keyPassword']
+            }
+        }
+        buildTypes.release.signingConfig signingConfigs.release
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}

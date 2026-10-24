@@ -1,0 +1,71 @@
+# Media Vault
+
+Your own private photo, GIF and video library (plus files, albums, a locked folder and hosted web pages), running on
+your Windows PC. Phones and laptops use it in the browser or with the Android app.
+
+## What your PC needs
+
+Windows 10 or 11 (64-bit) and this folder - that's all. **No Node.js, npm, Python, Docker, Git or Linux terminal
+(WSL)**, and nothing to build: the scripts are PowerShell, which comes with Windows. PocketBase is included (setup
+only downloads it, about 13 MB, if it's missing). Only building the Android app (Java JDK 17 + Android SDK) or a new
+installer (Inno Setup) needs extra tools. Details: part 1 of `docs\SETUP-GUIDE.md`.
+
+## Getting started
+
+The step-by-step version, with screenshots of every setup page (Tailscale, phones, sites with their own backend,
+building the Android app and its signing key): **`docs\SETUP-GUIDE.md`**.
+
+1. Run **`Media-Vault-Setup-{version}.exe`** (if Windows says "Windows protected your PC", press **More info** >
+   **Run anyway**). It installs to `C:\Media Vault` without admin rights and opens setup when it's done.
+   *Or with the zip:* right-click it > **Properties** > tick **Unblock** > **OK**, unzip it somewhere that is **not**
+   synced by OneDrive (e.g. `C:\Media Vault`) and double-click **`start.bat`**.
+2. The first time, Media Vault opens **setup**:
+   - press **Next** through the pages - the defaults are fine for almost everyone;
+   - enter your email and a password when asked - that's your Media Vault account (the owner) and the admin
+     dashboard's, so you only need one;
+   - press **Set up** at the end. Windows asks once for admin rights (for the firewall).
+3. Your browser opens Media Vault - **sign in** with that email and password. Invite other people from the app's
+   menu ("Invite people").
+4. On your phone: press **Connect a phone...** in the Media Vault window and scan the QR code with the camera.
+
+From then on, `start.bat` (or the desktop shortcut) starts Media Vault and opens its status window, which shows
+whether it's running and the addresses to use.
+
+## Using it from your phone
+
+- **Easiest:** **Connect a phone...** on the status window's Status page shows a QR code - scan it with the camera.
+- **At home:** open the "Home Wi-Fi" address shown in the status window (like `http://192.168.1.20:8091`).
+- **Anywhere:** install [Tailscale](https://tailscale.com/download) on the PC and the phone, sign in to both with the
+  same account, and run setup again (`setup.bat`) - it adds a private `https://` address that only your devices can
+  open.
+- **Android app:** not included in this copy - see `android\README.md` to build it. Once it's in
+  `pb_public\downloads\`, setup's last page shows the download link and the address to type in.
+
+## Client galleries (for photographers)
+
+**Galleries** in the sidebar: send a client a private gallery link - your studio name, a cover and a message - where
+they view, heart their favorites and download (web size or full resolution, one photo or all as a .zip), with no
+account or Tailscale. You see views, downloads and their favorites. Step by step: "Client galleries" in part 5 of
+`docs\SETUP-GUIDE.md`.
+
+## Changing things later
+
+Run **`setup.bat`** (or **Setup...** in the status window): where your library is stored (e.g. a bigger drive -
+setup moves it), ports, admin account, Tailscale addresses, hosted-site servers, firewall, starting with Windows. It
+keeps your library and only changes what you change.
+
+## Backups
+
+Everything you upload is in the library folder - `pb_data`, unless you chose another place in setup (the status window shows it under **Storage**; hosted sites: `pb_sites\www`). To back up, stop Media Vault
+(close its window and choose Yes) and copy those folders somewhere safe.
+
+## For developers
+
+Moving an install to another PC, the https layout and making a clean copy
+(`scripts\make-package.ps1`): `docs\MOVING.md`. Building the installer: `scripts\make-installer.ps1` (Inno Setup,
+`installer\MediaVault.iss`). The Android app: `android\README.md`.
+
+## License
+
+MIT - see `LICENSE`. PocketBase (`pocketbase.exe`, which setup downloads) and the bundled libraries keep their own
+licenses, listed at the end of `LICENSE`.

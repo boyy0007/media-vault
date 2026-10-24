@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-accent="violet" data-grid="square" data-size="3" data-spacing="normal" data-sidebar="full" data-sites="cards">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0e0f13">
+  <title>Media Vault</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.json">
+  <script>
+    // Apply saved appearance before the first paint (see applyPrefs in app.js).
+    try {
+      const p = JSON.parse(localStorage.getItem("mv-prefs") || "{}") || {}, d = document.documentElement;
+      const light = matchMedia("(prefers-color-scheme: light)").matches;
+      if (p.theme) d.dataset.theme = p.theme === "system" ? (light ? "light" : "dark") : p.theme;
+      for (const k of ["accent", "grid", "size", "spacing", "sidebar", "sites"]) if (p[k]) d.dataset[k] = p[k];
+    } catch {}
+  </script>
+  <link rel="stylesheet" href="app.css?v=34">
+</head>
+<body>
+  <!-- Icons (Lucide-style, 24px grid). Use with <svg class="i"><use href="#i-name"/></svg> or ic("name") in app.js. -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></symbol>
+    <symbol id="i-heart-fill" viewBox="0 0 24 24"><path fill="currentColor" d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></symbol>
+    <symbol id="i-images" viewBox="0 0 24 24"><path d="M18 22H4a2 2 0 0 1-2-2V6"/><rect x="6" y="2" width="16" height="16" rx="2"/><circle cx="12" cy="8" r="2"/><path d="m22 13-1.3-1.3a2.4 2.4 0 0 0-3.4 0L11 18"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9l-.8-1.2A2 2 0 0 0 7.9 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol>
+    <symbol id="i-folder-plus" viewBox="0 0 24 24"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9l-.8-1.2A2 2 0 0 0 7.9 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><path d="M12 10v6M9 13h6"/></symbol>
+    <symbol id="i-folder-minus" viewBox="0 0 24 24"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.7-.9l-.8-1.2A2 2 0 0 0 7.9 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><path d="M9 13h6"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+    <symbol id="i-unlock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></symbol>
+    <symbol id="i-user-plus" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7.5"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6"/></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+    <symbol id="i-play"viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5Z"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6M15.5 7.5l3 3L22 7l-3-3"/></symbol>
+    <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M21.2 6.8a2.8 2.8 0 0 0-4-4L3.8 16.2a2 2 0 0 0-.5.8L2 21.4a.5.5 0 0 0 .6.6l4.4-1.3a2 2 0 0 0 .8-.5Z"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="14" height="14" rx="2"/><path d="M4 16a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.7 18-8-14a2 2 0 0 0-3.5 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3M12 9v4M12 17h.01"/></symbol>
+    <symbol id="i-sort" viewBox="0 0 24 24"><path d="m3 16 4 4 4-4M7 20V4M11 4h10M11 8h7M11 12h4"/></symbol>
+    <symbol id="i-restore" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.06 12.35a1 1 0 0 1 0-.7 10.75 10.75 0 0 1 19.88 0 1 1 0 0 1 0 .7 10.75 10.75 0 0 1-19.88 0"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="M14.1 5.9 9.9 3.8a2 2 0 0 0-1.8 0L3.6 6A1 1 0 0 0 3 7v12.4a1 1 0 0 0 1.4.9l3.7-1.9a2 2 0 0 1 1.8 0l4.2 2.1a2 2 0 0 0 1.8 0l4.5-2.2a1 1 0 0 0 .6-.9V5a1 1 0 0 0-1.4-.9l-3.7 1.9a2 2 0 0 1-1.8 0ZM15 6v15M9 3v15"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 5-5.5 10.2-7.4 11.8a1 1 0 0 1-1.2 0C9.5 20.2 4 15 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M9.9 15.5a2 2 0 0 0-1.4-1.4l-6.1-1.6a.5.5 0 0 1 0-1l6.1-1.6a2 2 0 0 0 1.4-1.4l1.6-6.1a.5.5 0 0 1 1 0l1.6 6.1a2 2 0 0 0 1.4 1.4l6.1 1.6a.5.5 0 0 1 0 1l-6.1 1.6a2 2 0 0 0-1.4 1.4l-1.6 6.1a.5.5 0 0 1-1 0ZM20 3v4M22 5h-4"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M21 4h-7M10 4H3M21 12h-9M8 12H3M21 20h-5M12 20H3M14 2v4M8 10v4M16 18v4"/></symbol>
+    <symbol id="i-palette" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r="1.2" fill="currentColor"/><circle cx="17.5" cy="10.5" r="1.2" fill="currentColor"/><circle cx="8.5" cy="7.5" r="1.2" fill="currentColor"/><circle cx="6.5" cy="12.5" r="1.2" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.93 0 1.65-.75 1.65-1.69 0-.44-.18-.84-.44-1.13-.29-.29-.44-.65-.44-1.12a1.64 1.64 0 0 1 1.67-1.67h2c3.05 0 5.55-2.5 5.55-5.55C21.97 6.01 17.46 2 12 2Z"/></symbol>
+    <symbol id="i-panel" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15.5 9.5 13 12l2.5 2.5"/></symbol>
+    <symbol id="i-justify" viewBox="0 0 24 24"><rect x="3" y="4" width="11" height="7" rx="1.5"/><rect x="16" y="4" width="5" height="7" rx="1.5"/><rect x="3" y="13" width="6" height="7" rx="1.5"/><rect x="11" y="13" width="10" height="7" rx="1.5"/></symbol>
+    <symbol id="i-captions" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 15h10M7 18h6"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><rect x="3" y="4" width="5" height="5" rx="1"/><rect x="3" y="15" width="5" height="5" rx="1"/><path d="M11 6.5h10M11 17.5h10"/></symbol>
+    <symbol id="i-layout" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4M8 13h8M8 17h5"/></symbol>
+    <symbol id="i-cloud-up" viewBox="0 0 24 24"><path d="M4 14.9A7 7 0 1 1 15.7 8h1.8a4.5 4.5 0 0 1 2.5 8.2M12 12v9M8 16l4-4 4 4"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20M2 12h20"/></symbol>
+    <symbol id="i-qr" viewBox="0 0 24 24"><rect x="3" y="3" width="5" height="5" rx="1"/><rect x="16" y="3" width="5" height="5" rx="1"/><rect x="3" y="16" width="5" height="5" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3M21 21v.01M12 7v3a2 2 0 0 1-2 2H7M3 12h.01M12 3h.01M12 16v.01M16 12h1M21 12v.01M12 21v-1"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3Z"/><circle cx="12" cy="13" r="3"/></symbol>
+    <symbol id="i-zip" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4M10 6h1M10 9h1M10 12h1"/><rect x="9" y="15" width="3" height="4" rx="1"/></symbol>
+  </svg>
+
+  <!-- Sign in / first-run -->
+  <section id="auth" class="auth" hidden>
+    <form id="authForm" class="auth-card">
+      <img src="icon.svg" alt="" class="auth-logo">
+      <div class="auth-head">
+        <h1>Media Vault</h1>
+        <p id="authHint" class="muted">Sign in to your library</p>
+      </div>
+      <label id="nameRow" hidden>Name<input name="name" autocomplete="name"></label>
+      <label>Email<input name="email" type="email" required autocomplete="email"></label>
+      <label>Password<input name="password" type="password" required minlength="8" autocomplete="current-password"></label>
+      <label id="confirmRow" hidden>Confirm password<input name="confirm" type="password" minlength="8" autocomplete="new-password"></label>
+      <label id="inviteRow" hidden>Invite code<input name="invite" class="mono" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXX-XXXX"></label>
+      <p id="authError" class="error" hidden></p>
+      <button class="btn primary lg" id="authSubmit">Sign in</button>
+      <button type="button" class="link" id="authToggle" hidden>Have an invite code? Create an account</button>
+    </form>
+  </section>
+
+  <!-- App -->
+  <div id="app" class="app" hidden>
+    <aside id="sidebar" class="sidebar">
+      <div class="brand"><img src="icon.svg" alt=""><span class="brand-name">Media Vault</span>
+        <button id="sideToggle" class="icon-btn sm side-toggle" title="Compact sidebar"><svg class="i"><use href="#i-panel"/></svg></button></div>
+      <nav class="nav">
+        <button data-nav="library" class="active"><svg class="i"><use href="#i-grid"/></svg> Library</button>
+        <button data-nav="favorites"><svg class="i"><use href="#i-heart"/></svg> Favorites</button>
+        <button data-nav="albums"><svg class="i"><use href="#i-images"/></svg> Albums</button>
+        <button data-nav="galleries" id="galleriesNav" hidden><svg class="i"><use href="#i-camera"/></svg> Galleries</button>
+        <button data-nav="inbox"><svg class="i"><use href="#i-users"/></svg> Shared with me <span id="inboxCount" class="nav-n"></span></button>
+        <button data-nav="map"><svg class="i"><use href="#i-map"/></svg> Map</button>
+        <button data-nav="locked"><svg class="i"><use href="#i-lock"/></svg> Locked folder</button>
+        <button data-nav="trash"><svg class="i"><use href="#i-trash"/></svg> Trash <span id="trashCount" class="nav-n"></span></button>
+        <button data-nav="sites" id="sitesNav" hidden><svg class="i"><use href="#i-globe"/></svg> Sites</button>
+        <button id="sharesBtn"><svg class="i"><use href="#i-link"/></svg> Shared links</button>
+        <button id="invitesBtn" hidden><svg class="i"><use href="#i-users"/></svg> People</button>
+      </nav>
+      <div class="side-head">
+        <span>Albums</span>
+        <button id="newAlbumBtn" class="icon-btn sm" title="New album or folder"><svg class="i"><use href="#i-plus"/></svg></button>
+      </div>
+      <div id="albumList" class="album-list"></div>
+      <div id="stats" class="stats"></div>
+      <div class="side-foot">
+        <span id="avatar" class="avatar"></span>
+        <span id="whoami" class="who"></span>
+        <button id="appearanceBtn" class="icon-btn sm" title="Appearance"><svg class="i"><use href="#i-palette"/></svg></button>
+        <button id="logoutBtn" class="icon-btn sm" title="Sign out"><svg class="i"><use href="#i-logout"/></svg></button>
+      </div>
+    </aside>
+    <div id="scrim" class="scrim"></div>
+
+    <main class="main">
+      <header class="topbar">
+        <button id="menuBtn" class="icon-btn menu-btn" title="Menu"><svg class="i"><use href="#i-menu"/></svg></button>
+        <label class="search">
+          <svg class="i"><use href="#i-search"/></svg>
+          <input id="search" type="search" placeholder="Search names and tags">
+        </label>
+        <button id="uploadBtn" class="btn primary"><svg class="i"><use href="#i-upload"/></svg><span class="hide-sm">Upload</span></button>
+        <input id="fileInput" type="file" multiple accept="image/*,video/*,.gif,.mkv,.avi,.mov,.heic,.insp,.insv,.lrv" hidden>
+      </header>
+
+      <div class="toolbar">
+        <div class="title-wrap">
+          <h2 id="viewTitle">Library</h2>
+          <span id="viewCount" class="count"></span>
+          <span id="albumActions" class="title-actions" hidden>
+            <button id="shareAlbumBtn" class="btn ghost sm"><svg class="i"><use href="#i-share"/></svg>Share</button>
+            <button id="galleryAlbumBtn" class="btn ghost sm" hidden><svg class="i"><use href="#i-camera"/></svg>Client gallery</button>
+            <button id="editRulesBtn" class="btn ghost sm" hidden><svg class="i"><use href="#i-sliders"/></svg>Edit rules</button>
+            <button id="albumFolderBtn" class="btn ghost sm"><svg class="i"><use href="#i-folder"/></svg>Folder</button>
+            <button id="renameAlbumBtn" class="btn ghost sm"><svg class="i"><use href="#i-pencil"/></svg>Rename</button>
+            <button id="deleteAlbumBtn" class="btn ghost sm danger"><svg class="i"><use href="#i-trash"/></svg>Delete</button>
+          </span>
+          <span id="folderActions" class="title-actions" hidden>
+            <button id="folderRenameBtn" class="btn ghost sm"><svg class="i"><use href="#i-pencil"/></svg>Rename</button>
+            <button id="folderDeleteBtn" class="btn ghost sm danger"><svg class="i"><use href="#i-trash"/></svg>Delete</button>
+          </span>
+          <span id="trashActions" class="title-actions" hidden>
+            <button id="emptyTrashBtn" class="btn ghost sm danger"><svg class="i"><use href="#i-trash"/></svg>Empty trash</button>
+          </span>
+          <span id="vaultActions" class="title-actions" hidden>
+            <button id="vBackBtn" class="btn ghost sm" hidden><svg class="i"><use href="#i-left"/></svg>Back</button>
+            <button id="renameFolderBtn" class="btn ghost sm" hidden><svg class="i"><use href="#i-pencil"/></svg>Rename</button>
+            <button id="deleteFolderBtn" class="btn ghost sm danger" hidden><svg class="i"><use href="#i-trash"/></svg>Delete folder</button>
+            <button id="lockNowBtn" class="btn ghost sm"><svg class="i"><use href="#i-lock"/></svg>Lock now</button>
+            <button id="changePassBtn" class="btn ghost sm"><svg class="i"><use href="#i-key"/></svg>Passphrase</button>
+          </span>
+        </div>
+        <div class="filters" id="filters">
+          <div class="chips">
+            <button data-kind="all" class="chip active">All</button>
+            <button data-kind="image" class="chip">Photos</button>
+            <button data-kind="video" class="chip">Videos</button>
+            <button data-kind="gif" class="chip">GIFs</button>
+            <button data-kind="file" class="chip" hidden>Files</button>
+          </div>
+          <label class="select" id="sortWrap">
+            <svg class="i"><use href="#i-sort"/></svg>
+            <select id="sort" title="Sort">
+              <option value="-takenAt">Date taken · newest</option>
+              <option value="takenAt">Date taken · oldest</option>
+              <option value="-created">Recently added</option>
+              <option value="title">Name A–Z</option>
+              <option value="-size">Largest first</option>
+            </select>
+          </label>
+          <div class="view-wrap">
+            <button id="viewBtn" class="btn" title="View options"><svg class="i"><use href="#i-layout"/></svg><span class="hide-sm">View</span></button>
+            <div id="viewPop" class="pop" hidden></div>
+          </div>
+          <button id="selectBtn" class="btn">Select</button>
+        </div>
+      </div>
+
+      <p id="trashNote" class="note" hidden><svg class="i"><use href="#i-info"/></svg>Items in Trash are deleted forever 30 days after you delete them.</p>
+
+      <div id="selBar" class="selbar" hidden>
+        <div class="sel-info">
+          <button data-bulk="cancel" class="icon-btn sm" title="Done"><svg class="i"><use href="#i-x"/></svg></button>
+          <strong id="selCount">0 selected</strong>
+          <button data-bulk="all" class="btn ghost sm">Select all</button>
+        </div>
+        <div class="sel-actions">
+          <button data-bulk="fav" class="act"><svg class="i"><use href="#i-heart"/></svg><span>Favorite</span></button>
+          <button data-bulk="album" class="act"><svg class="i"><use href="#i-folder-plus"/></svg><span>Add to album</span></button>
+          <button data-bulk="folder" class="act"><svg class="i"><use href="#i-folder"/></svg><span>Move to folder</span></button>
+          <button data-bulk="unalbum" class="act" hidden><svg class="i"><use href="#i-folder-minus"/></svg><span>Remove</span></button>
+          <button data-bulk="share" class="act"><svg class="i"><use href="#i-share"/></svg><span>Share</span></button>
+          <button data-bulk="gallery" class="act" hidden><svg class="i"><use href="#i-camera"/></svg><span>Gallery</span></button>
+          <button data-bulk="restore" class="act" hidden><svg class="i"><use href="#i-restore"/></svg><span>Restore</span></button>
+          <button data-bulk="lock" class="act"><svg class="i"><use href="#i-lock"/></svg><span>Lock</span></button>
+          <button data-bulk="move" class="act" hidden><svg class="i"><use href="#i-folder"/></svg><span>Move</span></button>
+          <button data-bulk="unlock" class="act" hidden><svg class="i"><use href="#i-unlock"/></svg><span>Unlock</span></button>
+          <button data-bulk="download" class="act"><svg class="i"><use href="#i-download"/></svg><span>Download</span></button>
+          <button data-bulk="delete" class="act danger"><svg class="i"><use href="#i-trash"/></svg><span>Delete</span></button>
+        </div>
+      </div>
+
+      <section id="memories" class="memories" hidden></section>
+      <div id="vFolders" class="vfolders" hidden></div>
+      <div id="albumGrid" class="album-grid" hidden></div>
+      <div id="grid" class="grid-wrap"></div>
+      <div id="sitesView" class="sites-view" hidden></div>
+      <div id="galleriesView" class="galleries-view" hidden></div>
+      <div id="inboxView" class="inbox-view" hidden></div>
+      <div id="mapView" class="map-view" hidden><div id="map"></div><div id="mapStatus" class="map-status" hidden></div><div id="mapEmpty" class="map-empty" hidden></div></div>
+      <div id="rail" class="rail" hidden><div class="rail-track"></div><div class="rail-knob"></div><div class="rail-tip" hidden></div></div>
+      <div id="empty" class="empty" hidden></div>
+      <div id="sentinel" class="sentinel"></div>
+    </main>
+  </div>
+
+  <!-- Viewer -->
+  <div id="viewer" class="viewer" hidden>
+    <div class="v-top">
+      <button data-v="close" class="icon-btn" title="Close (Esc)"><svg class="i"><use href="#i-x"/></svg></button>
+      <div class="v-title"><span id="vName" class="v-name"></span><span id="vMeta" class="v-meta"></span></div>
+      <div class="v-actions">
+      <span id="vZoomCtl" class="v-zoom">
+        <button data-v="zoomout" class="icon-btn" title="Zoom out (-)"><svg class="i"><use href="#i-minus"/></svg></button>
+        <button data-v="zoomfit" id="vZoom" class="zoom-pct" title="Fit / 100% (0)">100%</button>
+        <button data-v="zoomin" class="icon-btn" title="Zoom in (+)"><svg class="i"><use href="#i-plus"/></svg></button>
+      </span>
+      <button data-v="pano" id="vPano" class="zoom-pct" title="360° view / flat (V)" hidden>360°</button>
+      <button data-v="fav" class="icon-btn" title="Favorite (F)"><svg class="i"><use href="#i-heart"/></svg></button>
+      <button data-v="download" class="icon-btn" title="Download"><svg class="i"><use href="#i-download"/></svg></button>
+      <button data-v="restore" class="icon-btn" title="Restore" hidden><svg class="i"><use href="#i-restore"/></svg></button>
+      <button data-v="unlock" class="icon-btn" title="Move to library" hidden><svg class="i"><use href="#i-unlock"/></svg></button>
+      <button data-v="info" class="icon-btn" title="Info (I)"><svg class="i"><use href="#i-info"/></svg></button>
+      <button data-v="delete" class="icon-btn" title="Delete"><svg class="i"><use href="#i-trash"/></svg></button>
+      </div>
+    </div>
+    <div class="v-body">
+      <div id="vAmbient" class="v-ambient"></div>
+      <div id="vStage" class="v-stage"></div>
+      <button data-v="prev" class="v-nav prev" title="Previous (←)"><svg class="i"><use href="#i-left"/></svg></button>
+      <button data-v="next" class="v-nav next" title="Next (→)"><svg class="i"><use href="#i-right"/></svg></button>
+      <aside id="vInfo" class="v-info" hidden></aside>
+    </div>
+  </div>
+
+  <!-- Hosted site, opened inside the app (Sites). The iframe is another origin (the sites server's port); the sandbox
+       keeps that origin (so the site's own storage works) but stops it from navigating this page away. -->
+  <div id="siteFrame" class="site-frame" hidden>
+    <button id="sfBack" class="sf-back" title="Back to Sites (Esc)" aria-label="Back to Sites"><svg class="i"><use href="#i-left"/></svg></button>
+    <div id="sfLoad" class="sf-load"><span class="sf-spin"></span><strong id="sfLoadName"></strong><small id="sfLoadMsg"></small></div>
+    <iframe id="sfFrame" title="Site" allow="fullscreen; autoplay; clipboard-write"
+      sandbox="allow-scripts allow-same-origin allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-downloads allow-pointer-lock allow-presentation"></iframe>
+  </div>
+
+  <!-- Uploads -->
+  <div id="uploads" class="uploads" hidden>
+    <div class="up-head"><strong id="upTitle">Uploading</strong><button id="upClose" class="icon-btn sm" title="Hide"><svg class="i"><use href="#i-x"/></svg></button></div>
+    <div id="upList" class="up-list"></div>
+  </div>
+  <div id="drop" class="drop" hidden><div><svg class="i"><use href="#i-cloud-up"/></svg><span id="dropText">Drop photos, videos and GIFs to upload</span></div></div>
+
+  <!-- Modal -->
+  <div id="modal" class="modal" hidden><div class="modal-card" id="modalCard"></div></div>
+  <div id="toast" class="toast" hidden></div>
+
+  <script type="module" src="app.js?v=41"></script>
+</body>
+</html>

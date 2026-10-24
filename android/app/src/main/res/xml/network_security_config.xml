@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The vault is normally reached over plain http on the Tailscale network / home Wi-Fi
+     (e.g. http://100.x.y.z:8091), which Tailscale already encrypts, so allow cleartext. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>
