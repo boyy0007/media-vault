@@ -296,6 +296,39 @@ favorites; your photos stay in your library.
 sites server at `https://<pc>.<tailnet>.ts.net/<site>/` (or `http://<PC>:8092/<site>/`). Each site has its own
 access setting: public, password, or private.
 
+**Publishing a site:**
+1. In the app, open **Sites** in the sidebar and press **New site** (or drop a project folder or .zip anywhere on
+   the page).
+2. Give it a name and an **address** - the part after the `/`, e.g. `my-game` gives `.../my-game/`.
+3. Press **Upload folder** or **Upload .zip** on its card. The project needs an `index.html` (at the top, or in a
+   built folder such as `dist\` or `build\`, which Media Vault offers to publish instead). Hidden files and
+   `node_modules` are left out, and a single wrapping folder is removed.
+4. Press **Open** to see it. To update it later, upload again - that replaces the whole site. **Rename** changes its
+   name and address; **Delete** takes it offline.
+
+**Who can open it - Access:** on the site's card press **Access** and pick one:
+- **Public** - anyone with the link. Over Tailscale that means only your own devices, *unless* Funnel is on for the
+  sites (Media Vault window > **Settings** > **Hosted sites**: **Public - anyone with the link**), which puts them on
+  the internet.
+- **Password** - visitors type the password once and their device remembers it for 30 days. Changing the password or
+  the setting signs everyone out.
+- **Only me** - only you: opening it from the app lets you in, anyone else sees "This site is private".
+
+**Store page - Page:** shows people a page before the site, like an itch.io game page: a cover (a wide 16:9 picture
+looks best), a tagline, an **About** text, up to 8 screenshots and up to 10 downloads (a build, an APK, a .zip...).
+Turn on **Show a page before the site** and press **Save**. Visitors then press **Play** to open the site full
+screen; opening it from the app still goes straight to the site. Tick **Downloads need a key** to keep the downloads
+for people you give a key to.
+
+**Keys:** a key is a personal link (`.../my-game/?key=...`) for one person. It gets them past **Password** or
+**Only me**, and to downloads that need a key. Press **Keys**, write who it's for (only you see that), choose how many
+devices may use it (1, 3 or any number) and whether it expires (never, 7 or 30 days), press **Make key** and send them
+its link. Deleting a key shuts it off straight away; changing the site's password doesn't.
+
+**Visits:** once people open a site, its card shows how many views (store page), plays (the site itself) and downloads
+it has had - each visitor counts once per 30 minutes, and playing it inside the app isn't counted. Click that line
+for all time, this week and today.
+
 **Sharing a site:** each site has **Copy link** and **QR code**. The QR code opens a window with the code, the
 link and who can open it; point a phone's camera at it, or press **Save picture** (a PNG with the site's name and
 link under the code, for a poster or a chat) or **Share…** on a phone. It's the site's normal link, so a site set to

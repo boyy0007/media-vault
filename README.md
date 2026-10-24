@@ -102,6 +102,34 @@ they view, heart their favorites and download (web size or full resolution, one 
 account or Tailscale. You see views, downloads and their favorites. Step by step: "Client galleries" in part 5 of
 `docs\SETUP-GUIDE.md`.
 
+## Hosting sites (web pages, games, portfolios)
+
+**Sites** in the sidebar (owner only) puts your own web projects online from the same PC - anything that's a folder
+of files with an `index.html`: a portfolio, a small web game, a page for an event, a built React/Vue/Svelte app.
+
+- **Publish:** **New site**, give it a name and an address (e.g. `my-game`), then **Upload folder** or
+  **Upload .zip** - or just drop the folder or .zip on the page. A wrapping folder, hidden files and `node_modules`
+  are skipped, and if the project has a built `dist\` or `build\` folder Media Vault offers to publish that. Uploading
+  again replaces the whole site.
+- **Its address:** `https://{pc}.{tailnet}.ts.net/my-game/` once Tailscale is set up, or `http://{PC}:8092/my-game/`
+  at home. Sites run on a separate server from your library, so a site's code can never reach your photos or your
+  sign-in.
+- **Who can open it (Access):** **Public** (anyone with the link), **Password** (visitors type it once; their device
+  remembers it for 30 days) or **Only me**. "Public" means public on the internet only if you turn on Tailscale Funnel
+  for them (Media Vault window > **Settings** > **Hosted sites**) - otherwise it's only your own devices on Tailscale.
+- **Share it:** **Copy link**, or **QR code** for a code people can scan (with **Save picture** for a poster).
+- **Store page (Page):** an itch.io-style page shown before the site - cover picture, tagline, description, up to 8
+  screenshots and up to 10 downloads (a build, an APK, a .zip). Visitors press **Play** to open the site full screen.
+- **Keys:** personal links that let one person in past the password or **Only me**, or get the downloads when those
+  need a key. Each key works on 1 device (or 3, or any number), can expire after 7 or 30 days, and stops working when
+  you delete it.
+- **Visits:** each site card shows its views, plays and downloads; click that line for this week and today.
+- **Sites with a backend** (e.g. a game that saves players' progress on a server): **Settings** > **Add a site or
+  backend...** in the Media Vault window sets up the site and its own PocketBase server in one go.
+
+Every published site is also copied to the `projects\` folder, so all your sites are in one place to keep or back up.
+Step by step, with screenshots: part 6 of `docs\SETUP-GUIDE.md`.
+
 ## Changing things later
 
 Run **`setup.bat`** (or **Setup...** in the status window): where your library is stored (e.g. a bigger drive -
